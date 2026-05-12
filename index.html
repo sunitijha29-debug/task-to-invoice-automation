@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Task Entry</h2>
+
+    <form onsubmit="submitForm(); return false;">
+      <input type="text" id="client" placeholder="Client Name" required><br><br>
+      <input type="text" id="task" placeholder="Task Name" required><br><br>
+      <input type="number" id="hours" placeholder="Hours" required><br><br>
+      <input type="number" id="rate" placeholder="Rate" required><br><br>
+      <input type="text" id="currency" placeholder="Currency (e.g. USD)" required><br><br>
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <script>
+      function submitForm() {
+        const data = {
+          client: document.getElementById("client").value,
+          task: document.getElementById("task").value,
+          hours: Number(document.getElementById("hours").value),
+          rate: Number(document.getElementById("rate").value),
+          currency: document.getElementById("currency").value
+        };
+
+        google.script.run
+          .withSuccessHandler(function(url) {
+            alert(" Invoice Created!");
+            window.open(url, "_blank");
+          })
+          .withFailureHandler(function(error) {
+            alert(" Error: " + error.message);
+          })
+          .saveData(data);
+      }
+    </script>
+  </body>
+</html>
